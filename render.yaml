@@ -1,0 +1,16 @@
+# Render Blueprint: the engine as one free web service. The corpus is baked into the image from the
+# public Hugging Face dataset (see deploy/render/Dockerfile), and Vercel fronts it (deploy/vercel).
+services:
+  - type: web
+    name: ruchi
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: deploy
+    dockerfilePath: ./deploy/render/Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: ORDERORDER_DATA_DIR
+        value: /data
