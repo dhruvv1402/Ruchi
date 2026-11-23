@@ -1,6 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
-    { "source": "/:path*", "destination": "https://dhruvv1402-ruchi.hf.space/:path*" }
+    { "source": "/", "destination": "https://ruchi-h75n.onrender.com/" },
+    { "source": "/:path*", "destination": "https://ruchi-h75n.onrender.com/:path*" }
   ]
 }
