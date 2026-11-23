@@ -14,6 +14,10 @@
 #     token everywhere else.
 #   * --proxy-headers, so the rate limiter counts each visitor rather than Render's proxy.
 #   * $PORT, which Render sets.
+#   * The corpus is opened read-only and immutable. SQLite otherwise opens it read-write, and opening
+#     a file in an image layer for writing makes overlayfs copy all 1.2 GB of it into the container's
+#     writable layer, inside a 512 MB memory limit: the first deploy died of exactly that. Nothing the
+#     public page does writes to the corpus; only ingestion and the sign-in routes do.
 
 FROM python:3.12-slim
 
@@ -50,7 +54,8 @@ ENV PATH="/app/.venv/bin:$PATH" \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     ORDERORDER_DATA_DIR=/data \
-    HF_HOME=/data/hf \
+    DATABASE_URL="sqlite:///file:/data/orderorder.sqlite3?mode=ro&immutable=1&uri=true" \
+    HF_HOME=/tmp/hf \
     PORT=10000
 
 USER ruchi
