@@ -10,7 +10,7 @@ writes what opposing counsel will say.
 
 | | |
 |---|---|
-| **Live** | [ruchi.vihar.in](https://ruchi.vihar.in) |
+| **Live** | [law-ruchi.vercel.app](https://law-ruchi.vercel.app) |
 | **Corpus** | Supreme Court of India — 38,005 judgments with full text, 707,647 paragraphs, 1950–2025 |
 | **Data** | [AWS Open Data](https://registry.opendata.aws/indian-supreme-court-judgments/), CC-BY-4.0 |
 | **Licence** | [Apache-2.0](LICENSE) |
@@ -205,6 +205,14 @@ The published port is `127.0.0.1:8000` — put a reverse proxy in front for anyt
 
 Full runbook, including Bedrock on EC2 and the IMDS hop limit that will otherwise send the agent
 silently to a fallback model: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) §4.
+
+**The live demo** runs on free tiers. Render serves the engine, Vercel fronts it at
+[law-ruchi.vercel.app](https://law-ruchi.vercel.app), and the corpus is a
+[Hugging Face dataset](https://huggingface.co/datasets/dhruvv1402/ruchi-corpus) baked into the image at
+build time and opened read-only. The Render image, `render.yaml` and the Vercel config are on the
+[`deploy`](https://github.com/dhruvv1402/Ruchi/tree/deploy) branch, and
+[`keep-alive.yml`](.github/workflows/keep-alive.yml) pings the health route so the free instance does
+not sleep between visitors.
 
 ## What it scores
 
